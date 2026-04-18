@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Opticeye</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 10px 0;
+            font-size: 13px;
+        }
+        .top-bar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+        .top-info {
+            display: flex;
+            gap: 30px;
+        }
+        .top-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .top-social a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            background: #044d96;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo img {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .nav a:hover {
+            color: #00cfe8;
+        }
+
+        /* DROPDOWN LOGIC */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 240px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            top: 100%;
+            left: 0;
+            border-radius: 4px;
+        }
+        .dropdown-content a { color: #333 !important; border-bottom: 1px solid #f0f0f0; margin: 0; }
+        .submenu { position: relative; }
+        .submenu-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: #ffffff;
+            min-width: 220px;
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.1);
+        }
+        .dropdown:hover > .dropdown-content, .submenu:hover > .submenu-content { display: block; }
+        .side-arrow { float: right; font-size: 10px; margin-top: 3px; }
+
+        /* BUTTONS */
+        .btn-book {
+            background-color: #1b1b5e;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .btn-book:hover { background-color: #00cfe8; }
+        /* Base Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 240px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    z-index: 100;
+    top: 100%;
+    left: 0;
+    border-radius: 4px;
+}
+
+.dropdown-content a {
+    color: #333 !important;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Inherited/Submenu Logic */
+.submenu {
+    position: relative;
+}
+
+.submenu-content {
+    display: none;
+    position: absolute;
+    left: 100%; /* Positions it to the right of the main menu */
+    top: 0;
+    background-color: #ffffff;
+    min-width: 220px;
+    box-shadow: 8px 8px 16px rgba(0,0,0,0.1);
+    border-radius: 0 4px 4px 0;
+}
+
+/* Hover States */
+.dropdown:hover > .dropdown-content {
+    display: block;
+}
+
+.submenu:hover > .submenu-content {
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f8f9fa;
+    color: #004d99 !important;
+}
+
+/* Visual Cues */
+.side-arrow {
+    float: right;
+    font-size: 10px;
+    margin-top: 3px;
+    color: #999;
+}
+
+.arrow {
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 90vh;
+            background: url("https://media.istockphoto.com/id/1189207226/photo/female-patient-checking-vision-in-ophthalmological-clinic.jpg?s=612x612&w=0&k=20&c=jgoUMyIj09OnX6lc5FY3KDcheFDZ9zll6uZTHafmmgk=") center/cover no-repeat;
+            display: flex;
+            align-items: center;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            padding: 40px;
+        }
+        .hero-content h1 { font-size: 52px; color: #2c2c54; margin-bottom: 20px; font-weight: 700; }
+        .hero-content h4 { color: #2c2c54; margin-bottom: 30px; font-weight: 500; }
+        .subtitle { color: #00cfe8; letter-spacing: 2px; font-weight: 600; margin-bottom: 15px; display: block; }
+
+        /*about*/
+.about {
+    padding: 80px 8%;
+    background: #ffffff;
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+/* IMAGE */
+.about-image img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 4px;
+    gap: 150px;
+}
+
+/* CONTENT */
+.about-content {
+    max-width: 750px;
+}
+
+.section-tag {
+    color: #00c9d4;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.about-content h2 {
+    font-size: 42px;
+    color: #1b1b5e;
+    margin-bottom: 20px;
+}
+
+.about-content p {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+/* LIST */
+.about-list {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.about-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    color: #1b1b5e;
+}
+
+.about-list i {
+    background: #00c9d4;
+    color: #fff;
+    padding: 6px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+.about-section {
+    padding: 60px 20px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: flex-end; /* Poore content ko right side shift karne ke liye */
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* Ensures content stays right inside the container */
+}
+
+.content-wrapper {
+    max-width: 600px; /* Width controls how much space the text takes on the right */
+    text-align: left;
+}
+
+.sub-heading {
+    color: #11cbd7;
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.main-heading {
+    color: #1a237e;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.description {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.features-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.check-icon {
+    background-color: #11cbd7;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.info-footer {
+    display: flex;
+    gap: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-icon {
+    font-size: 30px;
+    color: #11cbd7;
+}
+
+.info-item strong {
+    color: #1a237e;
+    display: block;
+}
+
+.info-item p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+        
+        /* SERVICES GRID */
+        .services-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .service-card { display: flex; flex-direction: column; background: #fff; padding: 20px; border-radius: 8px; }
+        .card-header { display: flex; justify-content: space-between; position: relative; margin-bottom: 15px; }
+        .service-title { color: #2e5a9c; font-size: 1.2rem; font-weight: 600; }
+        .service-number { color: #c9d6ea; font-size: 3.5rem; font-weight: 700; opacity: 0.5; }
+        .image-wrapper { width: 100%; height: 250px; overflow: hidden; border-radius: 4px; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .service-link { color: #2e5a9c; text-decoration: none; font-weight: 600; margin-top: 15px; }
+        /*status*/
+        .stats-section {
+  background:  #044d96;
+  padding: 70px 10%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  color: #fff;
+}
+
+.stat-box {
+  padding: 0 40px;
+  border-right: 1px solid rgba(255,255,255,0.3);
+}
+
+.stat-box:last-child {
+  border-right: none;
+}
+
+.stat-box h2 {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.stat-box h4 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.stat-box p {
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+        /* FACILITY SECTION (NEW) */
+        .facility-section { padding: 80px 8%; background: #f9f9f9; text-align: center; }
+        .facility-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            margin-top: 40px;
+        }
+        .facility-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+        .facility-card:hover { transform: translateY(-10px); }
+        .fac-img { height: 200px; width: 100%; overflow: hidden; }
+        .fac-img img { width: 100%; height: 100%; object-fit: cover; }
+        .fac-content { padding: 20px; }
+        .fac-content h3 { color: #1b1b5e; margin-bottom: 10px; }
+
+        /* STATS */
+        .stats-section { background: #044d96; padding: 70px 10%; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; color: #fff; }
+        .stat-box h2 { font-size: 60px; }
+        /*member*/
+          .specialist-section {
+          padding: 80px 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .container {
+            display: flex;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .content {
+            padding-right: 2rem;
+        }
+
+        .subtitle {
+            color: #00bcd4;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            color: #1e3a5f;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .intro-text {
+            color: #5a5a5a;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .specializations {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .specializations li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.05rem;
+        }
+
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            background-color: #00bcd4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-icon::after {
+            content: '✓';
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            background-color: #00bcd4;
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .read-more-btn:hover {
+            background-color: #00a5bb;
+            transform: translateY(-2px);
+        }
+
+        .image-container {
+            position: relative;
+        }
+
+        .doctor-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .content {
+                padding-right: 0;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .specialist-section {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+
+            .specialist-section {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .intro-text,
+            .specializations li,
+            .description {
+                font-size: 0.95rem;
+            }
+        }
+      
+        /* REVIEWS */
+        .google-reviews-section {
+    background-color: #004aad;
+    padding: 60px 20px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+.main-title { text-align: center; font-size: 36px; margin-bottom: 40px; }
+.main-title span { font-weight: 300; }
+
+.review-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.institute-sidebar { flex: 0 0 250px; text-align: left; }
+.logo-wrapper { background: white; padding: 10px; display: inline-block; border-radius: 5px; }
+.stars { color: #ffcc00; font-size: 20px; }
+.write-btn {
+    background: transparent; border: 1px solid white; color: white;
+    padding: 8px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;
+}
+
+/* Slider Controls */
+.slider-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.reviews-viewport {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 20px 5px;
+}
+.reviews-viewport::-webkit-scrollbar { display: none; } /* Hide scrollbar */
+
+.review-card {
+    background: #f8f9fa;
+    color: #333;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 300px; /* Fixed width for slider effect */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.card-header { display: flex; align-items: center; position: relative; margin-bottom: 10px; }
+.avatar { width: 40px; border-radius: 50%; margin-right: 10px; }
+.g-icon { position: absolute; right: 0; color: #4285F4; font-weight: bold; }
+.stars-gold { color: #ffcc00; margin-bottom: 8px; }
+
+/*faq*/
+.faq-section {
+  padding: 100px 8%;
+  background: #fff;
+}
+
+.section-tag {
+  color: #00cfe8;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.faq-container {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+}
+
+.faq-left h2 {
+  font-size: 40px;
+  margin: 15px 0 40px;
+  color: #1f245c;
+}
+
+/* FAQ Accordion */
+.faq-item {
+  border-bottom: 1px solid #eee;
+  padding: 20px 0;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: #1f245c;
+  cursor: pointer;
+}
+
+.toggle {
+  background: #00cfe8;
+  border: none;
+  color: #fff;
+  width: 35px;
+  height: 35px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.faq-answer {
+  margin-top: 15px;
+  font-size: 15px;
+  color: #6c6c6c;
+  line-height: 1.8;
+  display: none;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+/* RIGHT SIDE */
+.faq-right iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  margin-bottom: 30px;
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.info-box {
+  background: #f4f4f7;
+  padding: 25px;
+  text-align: center;
+}
+
+.info-box h4 {
+  color: #1f245c;
+  margin-bottom: 10px;
+}
+
+.info-box p {
+  font-size: 14px;
+  color: #6c6c6c;
+}
+@media (max-width: 992px) {
+  .faq-container {
+    grid-template-columns: 1fr;
+  }
+
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+}
+.consultation-section {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    background-color: #f1f7f9; /* Light side background */
+}
+
+.consultation-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    min-height: 600px;
+}
+
+/* Information Side (Dark Blue) */
+.info-panel {
+    background-color: #001a57; /* Navy Blue */
+    color: #ffffff;
+    flex: 1;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.circle-icon {
+    background-color: #1a66ff; /* Lighter blue for icons */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.contact-item a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.footer-note {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+/* Form Side */
+.form-panel {
+    flex: 1;
+    padding: 60px;
+}
+
+.form-title {
+    color: #001a57;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.field-group {
+    margin-bottom: 20px;
+}
+
+.field-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.field-group .required {
+    color: #c5161d;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.field-group input, 
+.field-group textarea {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 25px; /* Rounded pill style */
+    font-size: 1rem;
+    outline: none;
+}
+
+.field-group textarea {
+    border-radius: 15px;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: #001a57;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #1a66ff;
+}
+
+/* Responsive for Tablets/Phones */
+@media (max-width: 991px) {
+    .consultation-wrapper {
+        flex-direction: column;
+    }
+    .info-panel, .form-panel {
+        padding: 40px 20px;
+    }
+}
+
+
+
+/* Container Layout */
+.consultation-section {
+    display: flex;
+    min-height: 600px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Left Sidebar - Using your specific blue */
+.sidebar {
+    flex: 1;
+    background-color: #0051ba; /* The specific blue from your second image */
+    color: white;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.contact-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.icon-bg {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.footer-note {
+    margin-top: auto;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Right Form Side */
+.form-area {
+    flex: 1;
+    padding: 50px;
+    background-color: #f8fbff;
+}
+
+.form-area h2 {
+    color:#145DA0;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.req {
+    color: #e63946;
+    font-size: 0.75rem;
+    font-weight: normal;
+}
+
+.input-group input, 
+.input-group textarea {
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid #d1d9e0;
+    border-radius: 30px; /* Rounded pill shape */
+    font-size: 1rem;
+}
+
+.input-group textarea {
+    height: 100px;
+    border-radius: 15px;
+    resize: none;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background-color:#145DA0;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Responsive for mobile */
+@media (max-width: 800px) {
+    .consultation-section { flex-direction: column; }
+}
+
+        /*new footer*/
+.footer {
+            background:  #044d96;
+            border-top: 1px solid #e0e0e0;
+            padding: 2.5rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border: 2px solid  #044d96;;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color:#044d96;;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color:#044d96;;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-nav a {
+            color:#044d96;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color:#044d96;
+            opacity: 0.8;
+        }
+
+        .footer-nav a:hover {
+            color:#00cfe8;
+        }
+
+        .copyright {
+            color: #888;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .footer-nav {
+                gap: 1.5rem;
+            }
+
+            .social-icons {
+                gap: 0.8rem;
+            }
+
+            .social-icon {
+                width: 45px;
+                height: 45px;
+            }
+        }
+            /* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 992px){
+
+/* TOP BAR */
+.top-bar-container{
+    flex-direction: column;
+    gap:10px;
+    text-align:center;
+    padding:10px;
+}
+
+.top-info{
+    flex-direction:column;
+    gap:5px;
+}
+
+/* HEADER */
+.header{
+    padding:15px 20px;
+}
+
+.nav{
+    display:none;
+    flex-direction:column;
+    background:#044d96;
+    position:absolute;
+    top:80px;
+    left:0;
+    width:100%;
+    padding:20px 0;
+}
+
+.nav a{
+    padding:10px 0;
+    display:block;
+    text-align:center;
+}
+
+.nav.active{
+    display:flex;
+}
+
+/* MOBILE MENU BUTTON */
+.navbar-toggler{
+border:none;
+color:#fff;
+font-size:24px;
+}
+
+/* HERO */
+.hero{
+    height:auto;
+    padding:60px 20px;
+}
+
+.hero-content{
+    padding:20px;
+}
+
+.hero-content h1{
+    font-size:32px;
+}
+
+.hero-content h4{
+    font-size:16px;
+}
+
+
+/* ABOUT US MOBILE RESPONSIVE */
+
+@media (max-width:992px){
+
+.about-container{
+    flex-direction:column;
+    gap:30px;
+    text-align:center;
+}
+
+.about-image img{
+    max-width:100%;
+    width:100%;
+}
+
+.about-content{
+    max-width:100%;
+}
+
+.about-content h2{
+    font-size:30px;
+}
+
+.about-content p{
+    font-size:15px;
+}
+
+.about-list{
+    text-align:left;
+}
+
+}
+
+@media (max-width:576px){
+
+.about{
+    padding:50px 20px;
+}
+
+.about-content h2{
+    font-size:26px;
+}
+
+.about-list li{
+    font-size:14px;
+}
+
+}
+
+/* SERVICES */
+.grid-layout{
+    grid-template-columns:1fr;
+}
+
+/* STATS */
+.stats-section{
+    grid-template-columns:1fr;
+    gap:30px;
+}
+
+.stat-box{
+    border-right:none;
+    border-bottom:1px solid rgba(255,255,255,0.3);
+    padding-bottom:20px;
+}
+
+/* SPECIALIST */
+.container{
+    flex-direction:column;
+}
+
+.content{
+    padding-right:0;
+}
+
+h1{
+    font-size:32px;
+}
+
+}
+
+/* SMALL MOBILE */
+@media (max-width:576px){
+
+.hero-content h1{
+    font-size:26px;
+}
+
+.main-heading{
+    font-size:26px;
+}
+
+.about{
+    padding:50px 20px;
+}
+
+.facility-section{
+    padding:50px 20px;
+}
+
+}
+/* GOOGLE REVIEWS MOBILE RESPONSIVE */
+
+@media (max-width:992px){
+
+.review-container{
+    flex-direction:column;
+    align-items:center;
+}
+
+.institute-sidebar{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.slider-wrapper{
+    width:100%;
+}
+
+.reviews-viewport{
+    gap:15px;
+}
+
+.review-card{
+    min-width:260px;
+}
+
+}
+
+@media (max-width:576px){
+
+.google-reviews-section{
+    padding:40px 15px;
+}
+
+.main-title{
+    font-size:28px;
+}
+
+.review-card{
+    min-width:220px;
+    padding:15px;
+}
+
+}
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-container">
+        <div class="top-info">
+            <span><i class="fa-regular fa-clock"></i> Opening Hours: 8:30 to 2:00 P.M & 5:00 P.M to 9 P.M</span>
+            <span><i class="fa-solid fa-phone"></i> Contact: +91 91375 45241</span>
+        </div>
+        <div class="top-social">
+            <a href="#">Emergency: +91 91375 45241</a>
+        </div>
+    </div>
+</div>
+
+<header class="header">
+    <div class="logo">
+        <img src="logo.webp" alt="Opticeye">
+    </div>
+
+</button>
+    <nav class="nav">
+        <a href="#">Home</a>
+        
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Services <span class="arrow">▼</span></a>
+            <div class="dropdown-content">
+                <div class="submenu">
+                    <a href="#">Cataract Surgery <span class="side-arrow">▶</span></a>
+                    <div class="submenu-content">
+                        <a href="#">Cataract and Symptoms</a>
+                        <a href="#">Laser Cataract Surgery</a>
+                        <a href="#">Range Of Available IOLs</a>
+                        <a href="#">Care After Surgery</a>
+                    </div>
+                </div>
+
+                <div class="submenu">
+                    <a href="#">Femto Laser Cataract Surgery <span class="side-arrow">▶</span></a>
+                    <div class="submenu-content">
+                        <a href="#">Veritas</a>
+                    </div>
+                </div>
+
+                <a href="#">Diabetic Retinopathy</a>
+                <div class="submenu">
+                    <a href="#">LASIK Surgery <span class="side-arrow">▶</span></a>
+                    <div class="submenu-content">
+                        <a href="#">Femto Lasik Surgery</a>
+                        <a href="#">Trans PRK/SmartPulse</a>
+                        
+                    </div>
+                </div>
+                <div class="submenu">
+                    <a href="#">Lenticule Surgery <span class="side-arrow">▶</span></a>
+                    <div class="submenu-content">
+                        <a href="#">CLEAR/K-LEXs</a>
+                    </div>
+                </div>
+
+                <a href="#">Glaucoma Surgery</a>
+                 <div class="submenu">
+                    <a href="#">Cornea Surgery <span class="side-arrow">▶</span></a>
+                    <div class="submenu-content">
+                        <a href="#">Refractive Errors</a>
+                        <a href="#">Diseases And Disorders Of The Cornea</a>
+                        <a href="#">Keratoconus</a>
+                        
+                    </div>
+                </div>
+                <a href="#">Pediatric Ophthalmology</a>
+                <a href="#">Oculoplasty Surgery</a>
+                <a href="#">Specialty Contact Lens & Glasses Clinic</a>
+                <a href="#">Dry Eye</a>
+            </div>
+        </div>
+
+        <a href="#">Treatment</a>
+        <a href="#">Research</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact Us</a>
+    </nav>
+    <a href="#" class="btn-book">BOOK APPOINTMENT</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+<i class="fa-solid fa-bars"></i>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="subtitle">GREAT EXPERIENCE IN OPTICEYE</span>
+        <h1>Clear Vision.<br>Caring Hands.<br>Trusted Eye Care.</h1>
+        <h4>Specialist in No-Stitch Cataract Surgery, Phacoemulsification, Microsurgery & Squint Care,glaucoma and Retina</h4>
+        <a href="#" class="btn-book" style="background:#00cfe8">LEARN MORE</a>
+    </div>
+</section>
+
+<!--Aboutus-->
+<section class="about">
+    <div class="about-container">
+
+        <!-- LEFT IMAGE -->
+        <div class="about-image">
+            <img src="hospital.png" alt="">
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="about-content">
+            <span class="section-tag">OUR ABOUT</span>
+
+            <h2>
+                Kshitij Eye Care Clinic
+
+            </h2>
+
+            <p>
+                At Kshitij Eye Care Clinic, we are dedicated to providing comprehensive, compassionate,and advanced eye care services to patients of all ages.
+                Led by Dr. Jayshree Suradkar,our clinic combines modern technology, clinical expertise, and personalized care to ensure the best possible outcomes for every patient.
+We believe that clear vision is essential for a better quality of life, and our mission is to help you see the world with confidence and comfort.
+With a strong focus on safety, hygiene, and patient satisfaction, Kshitij Eye Care Clinic has become a trusted name in eye healthcare.
+
+            </p>
+
+            <ul class="about-list">
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    Here's what they have to say about us
+                </li>
+                
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    Appropriately empower dynamic leadership
+                </li>
+            </ul>
+
+            
+
+    </div>
+</section>
+
+<section class="services-container">
+    <div class="grid-layout">
+        <div class="service-card">
+            <div class="card-header">
+                <h3 class="service-title">Cataract Surgery</h3>
+                <span class="service-number">01</span>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://chdcityhospital.com/wp-content/uploads/2022/07/cataract-surgery.jpg" alt="Cataract">
+            </div>
+            <a href="https://wa.me/9137545241" class="service-link">Get Service →</a>
+        </div>
+        <div class="service-card">
+            <div class="card-header">
+                <h3 class="service-title">LASIK Surgery</h3>
+                <span class="service-number">02</span>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4PWFOzLky7UMnHp_I--SxnUS7x9ZQCZd98A&s" alt="LASIK">
+            </div>
+            <a href="https://wa.me/9137545241" class="service-link">Get Service →</a>
+        </div>
+        <div class="service-card">
+            <div class="card-header">
+                <h3 class="service-title">Diabetic Retinopathy</h3>
+                <span class="service-number">03</span>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://tandoneyehospital.com/wp-content/uploads/2025/02/image.png" alt="Retina">
+            </div>
+            <a href="https://wa.me/9137545241" class="service-link">Get Service →</a>
+        </div>
+         <div class="service-card">
+            <div class="card-header">
+                <h3 class="service-title">Glaucoma Surgery</h3>
+                <span class="service-number">04</span>
+            </div>
+            <div class="image-wrapper">
+                <img src="glucoma.webp" alt="Glaucoma Surgery">
+            </div>
+            <a href="https://wa.me/9137545241" class="service-link">Get Service →</a>
+        </div>
+         <div class="service-card">
+            <div class="card-header">
+                <h3 class="service-title">Cornea Surgery</h3>
+                <span class="service-number">05</span>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://st2.depositphotos.com/1965665/8500/i/450/depositphotos_85002676-stock-photo-vision-correction.jpg" alt="Retina">
+            </div>
+            <a href="https://wa.me/9137545241" class="service-link">Get Service →</a>
+        </div>
+         <div class="service-card">
+            <div class="card-header">
+                <h3 class="service-title">Pediatric Ophthalmology</h3>
+                <span class="service-number">06</span>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYzA20WlthKkw7nu_NsQ9ugoFtS_J9c9ey-g&s" alt="Retina">
+            </div>
+            <a href="https://wa.me/9137545241" class="service-link">Get Service →</a>
+        </div>
+    </div>
+</section>
+
+<section class="facility-section">
+    <span class="section-tag">OUR FACILITIES</span>
+    <h2 style="color:#1b1b5e; font-size: 36px;">Comfort & Accessibility</h2>
+    <div class="facility-grid">
+        <div class="facility-card">
+            <div class="fac-img"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=500&q=80" alt="Wheelchair"></div>
+            <div class="fac-content">
+                <h3>Wheelchair Accessibility</h3>
+                <p>Full ramp access and specialized assistance for easy mobility.</p>
+            </div>
+        </div>
+        <div class="facility-card">
+            <div class="fac-img"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" alt="Washroom"></div>
+            <div class="fac-content">
+                <h3>Sterile Washrooms</h3>
+                <p>Highly sanitized restroom facilities on every floor.</p>
+            </div>
+        </div>
+        <div class="facility-card">
+            <div class="fac-img"><img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=500&q=80" alt="Cashless"></div>
+            <div class="fac-content">
+                <h3>Cashless Payments</h3>
+                <p>Support for major TPAs and digital billing methods.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!--expert-->
+<section class="stats-section">
+  <div class="stat-box">
+    <h2>2</h2>
+    <h4>Expert Doctor</h4>
+    
+  </div>
+
+  <div class="stat-box">
+    <h2>98%</h2>
+    <h4>Happy Patients</h4>
+    
+  </div>
+
+  <div class="stat-box">
+    <h2>3000</h2>
+    <h4>Save Hearts</h4>
+    
+  </div>
+</section>
+<!--Member-->
+<section class="specialist-section">
+        <div class="container">
+            <!-- Left Content -->
+            <div class="content">
+                <div class="subtitle">Meet Our Eye Care Specialist</div>
+                
+                <h1>Dr. Jayshree Suradkar</h1>
+                
+                <p class="intro-text">
+                    Dr. Jayshree Suradkar is a highly skilled and experienced ophthalmologist, specializing in:
+                </p>
+                
+                <ul class="specializations">
+                    <li>
+                        <span class="check-icon"></span>
+                        <span>Phacoemulsification</span>
+                    </li>
+                    <li>
+                        <span class="check-icon"></span>
+                        <span>No-Stitch Cataract Surgery</span>
+                    </li>
+                    <li>
+                        <span class="check-icon"></span>
+                        <span>Microsurgery</span>
+                    </li>
+                </ul>
+                
+                
+                
+                <button class="read-more-btn">+ READ MORE</button>
+            </div>
+            
+            <!-- Right Image -->
+            <div class="image-container">
+                <img src="dr. jayashree.webp" 
+                     alt="Dr. Jayshree Suradkar" 
+                     class="doctor-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+<section class="process-section">
+  <p class="process-tag">OUR PROCESS</p>
+  <h2 class="process-title">Simple, Safe, and Transparent</h2>
+
+  <div class="process-grid">
+    
+    <div class="process-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDxYc2tD79W_sjYYWggKJX1vJbHhkiqfsFdA&s">
+      <h3>Appointment and Consultation</h3>
+      <p>Book your visit and meet our specialist for detailed evaluation.</p>
+    </div>
+
+    <div class="process-item">
+      <img src="https://s3.amazonaws.com/static.organiclead.com/Site-f2211f7d-9c24-4a4a-93ec-42c4f6ed8566/blog/pexels_antoni_shkraba_6749708_1.jpg">
+      <h3>Complete Eye Examination</h3>
+      <p>We conduct thorough tests to diagnose your condition accurately.</p>
+    </div>
+
+    <div class="process-item">
+      <img src="https://www.novartis.com/jp-ja/sites/novartis_jp/files/styles/image_mega_menu/public/2026-03/Scientist%20examining%20samples%20with%20a%20microscope%20in%20a%20laboratory.jpeg.webp?itok=SUGffksa">
+      <h3>Personalized Treatment Plan</h3>
+      <p>Each patient receives a customized treatment approach.</p>
+    </div>
+
+    <div class="process-item">
+      <img src="https://cdn.pagethink.com/cdn-cgi/image/width=1500,height=1002,fit=cover,gravity=0.032x0.4996/content/uploads/insights/6016061_01_N54_medium201.jpg">
+      <h3>Advanced Treatment or Surgery</h3>
+      <p>Using modern equipment and safe surgical techniques.</p>
+    </div>
+
+  </div>
+
+  <p class="process-footer">
+    Your comfort, safety, and clarity of vision are our top priorities.
+  </p>
+</section>
+
+<style>
+/* PROCESS SECTION */
+
+.process-section{
+    padding:80px 8%;
+    background:#ffffff;
+    text-align:center;
+}
+
+.process-tag{
+    color:#00cfe8;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+.process-title{
+    font-size:36px;
+    color:#1b1b5e;
+    margin-bottom:50px;
+}
+
+.process-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+}
+
+.process-item{
+    background:#f9f9f9;
+    padding:25px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.process-item:hover{
+    transform:translateY(-10px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.process-item img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.process-item h3{
+    color:#1b1b5e;
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.process-item p{
+    font-size:14px;
+    color:#666;
+}
+
+.process-footer{
+    margin-top:40px;
+    color:#444;
+}
+
+@media(max-width:992px){
+.process-grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:600px){
+.process-grid{
+grid-template-columns:1fr;
+}
+}
+  </style>  
+    
+
+<section class="google-reviews-section">
+    <h2 class="main-title">Google <span>Reviews</span></h2>
+    
+    <div class="review-container">
+        <div class="institute-sidebar">
+            <div class="logo-wrapper">
+                <img src="https://via.placeholder.com/80x40/000/fff?text=EYE" alt="Logo">
+            </div>
+            <h3>Doctor Eye Institute</h3>
+            <div class="main-rating">
+                <span class="stars">★★★★★</span>
+                <p>1,810 Google reviews</p>
+            </div>
+            <button class="write-btn">Write a review</button>
+        </div>
+
+        <div class="slider-wrapper">
+          
+            
+            <div class="reviews-viewport" id="slider">
+                <div class="review-card">
+                    <div class="card-header">
+                        <img src="https://www.google.com/maps/contrib/108918354820815216466/reviews?hl=en-GB" class="avatar">
+                        <div class="user-meta"><h4>Priti Kadam</h4><span>4 months ago</span></div>
+                        <span class="g-icon">G</span>
+                    </div>
+                    <div class="stars-gold">★★★★★ <span class="v-badge">✔</span></div>
+                    <p>I recently had my first eye checkup at this clinic, and I was impressed with the overall experience.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+
+                <div class="review-card">
+                    <div class="card-header">
+                        <img src="https://www.google.com/maps/contrib/105504096351069019103/reviews?hl=en-GB" class="avatar">
+                        <div class="user-meta"><h4>Neha Joshi</h4><span>4 months ago</span></div>
+                        <span class="g-icon">G</span>
+                    </div>
+                    <div class="stars-gold">★★★★★ <span class="v-badge">✔</span></div>
+                    <p>Dr.Jayshree Suradkar is extremely knowledgeable and made me feel at ease.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+
+                <div class="review-card">
+                    <div class="card-header">
+                        <img src="https://www.google.com/maps/contrib/117984501699013655035/reviews?hl=en-GB" class="avatar">
+                        <div class="user-meta"><h4>Nidz Makwana</h4><span>11 month ago</span></div>
+                        <span class="g-icon">G</span>
+                    </div>
+                    <div class="stars-gold">★★★★★ <span class="v-badge">✔</span></div>
+                    <p> Thank you doctor for your professionalism & carrying nature.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+
+               
+
+           
+        </div>
+    </div>
+	
+</section>
+<section class="form-area">
+        <h2>Request a Consultation</h2>
+        <form>
+            <div class="input-group">
+                <label>Your Name <span class="req">(Required)</span></label>
+                <input type="text" placeholder="Your Name">
+            </div>
+            
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="Email Address">
+            </div>
+
+            <div class="input-group">
+                <label>Your Phone <span class="req">(Required)</span></label>
+                <input type="tel" placeholder="Your Phone">
+            </div>
+
+            <div class="input-group">
+                <label>Message <span class="req">(Required)</span></label>
+                <textarea placeholder="Type Your Message"></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit</button>
+        </form>
+    </div>
+</section>
+<!--Fre-->
+<section class="faq-section">
+  
+
+    <!-- RIGHT : MAP + INFO -->
+    <div class="faq-right">
+      <iframe
+       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.030812890675!2d72.9656!3d19.2165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b9c0b0d6b7f5%3A0x1234567890abcdef!2sKshitij%20Eye%20Care%20Clinic!5e0!3m2!1sen!2sin!4v1700000000000"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+
+      <div class="info-cards">
+        <div class="info-box">
+          <h4>Lets Call </h4>
+          <p>+91 91375 45241</p>
+        </div>
+
+        <div class="info-box">
+          <h4>We Reached Here</h4>
+          <p>D-46/plot 437, Shree Gajanan Society,
+Sector 4 Charkop, <br>Kandivali West,
+Mumbai - 400067</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<script>
+  document.querySelectorAll(".faq-question").forEach(item => {
+    item.addEventListener("click", () => {
+      const parent = item.parentElement;
+
+      document.querySelectorAll(".faq-item").forEach(faq => {
+        faq.classList.remove("active");
+      });
+
+      parent.classList.toggle("active");
+    });
+  });
+</script>
+<br>
+<!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                <a href="#" class="social-icon" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="footer-nav">
+                <a href="#about">AboutUs</a>
+                <a href="#services">Services</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+                <a href="#privacy">Privacy Policy</a>
+            </nav>
+
+            <!-- Copyright -->
+            <div class="copyright">
+                © 2026 Kshitij Eye Care 
+            </div>
+        </div>
+    </footer>
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ <script>
+       
+const toggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".nav");
+
+toggle.addEventListener("click", () => {
+nav.classList.toggle("active");
+});
+
+
+    </script>
+
+
+
+</body>
+</html>

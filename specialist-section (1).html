@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Our Eye Care Specialist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .specialist-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+            padding: 4rem 3rem;
+            border-radius: 8px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .content {
+            padding-right: 2rem;
+        }
+
+        .subtitle {
+            color: #00bcd4;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            color: #1e3a5f;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .intro-text {
+            color: #5a5a5a;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .specializations {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .specializations li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.05rem;
+        }
+
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            background-color: #00bcd4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-icon::after {
+            content: '✓';
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            background-color: #00bcd4;
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .read-more-btn:hover {
+            background-color: #00a5bb;
+            transform: translateY(-2px);
+        }
+
+        .image-container {
+            position: relative;
+        }
+
+        .doctor-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .content {
+                padding-right: 0;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .specialist-section {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+
+            .specialist-section {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .intro-text,
+            .specializations li,
+            .description {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="specialist-section">
+        <div class="container">
+            <!-- Left Content -->
+            <div class="content">
+                <div class="subtitle">Meet Our Eye Care Specialist</div>
+                
+                <h1>Dr. Jayshree Suradkar</h1>
+                
+                <p class="intro-text">
+                    Dr. Jayshree Suradkar is a highly skilled and experienced ophthalmologist, specializing in:
+                </p>
+                
+                <ul class="specializations">
+                    <li>
+                        <span class="check-icon"></span>
+                        <span>Phacoemulsification</span>
+                    </li>
+                    <li>
+                        <span class="check-icon"></span>
+                        <span>No-Stitch Cataract Surgery</span>
+                    </li>
+                    <li>
+                        <span class="check-icon"></span>
+                        <span>Microsurgery</span>
+                    </li>
+                    <li>
+                        <span class="check-icon"></span>
+                        <span>Squint Correction</span>
+                    </li>
+                </ul>
+                
+                <p class="description">
+                    With a patient-first approach and a commitment to excellence, Dr. Suradkar has successfully treated numerous patients and restored vision with precision and care.<br><br>
+                    Her gentle approach, attention to detail, and dedication to continuous learning make her a trusted name in eye healthcare. She believes in treating not just the eyes, but the person behind them, with compassion and respect.
+                </p>
+                
+                <button class="read-more-btn">+ READ MORE</button>
+            </div>
+            
+            <!-- Right Image -->
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=700&fit=crop" 
+                     alt="Dr. Jayshree Suradkar" 
+                     class="doctor-image">
+            </div>
+        </div>
+    </section>
+</body>
+</html>
